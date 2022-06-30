@@ -16,10 +16,7 @@ function App() {
         backgroundColor: '#54BAB9',
         }}
     >
-        <Grid
-              container
-              direction="row"
-        >
+        <Grid container direction="row">
           <LocationsList setSelectedLocation={setSelectedLocation} selectedLocation={selectedLocation} />
           <WeatherData location={selectedLocation} />
         </Grid>

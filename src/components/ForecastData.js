@@ -6,7 +6,13 @@ import windDirectionToDegrees from '../utils/windDirectionToDegrees';
 function ForecastData({forecast}) {
   return (
     <>
-      <Typography align="center" key={`weather-title-${forecast.name}`} sx={{ fontSize: 20, fontWeight: 'bold', paddingTop: "1vw", paddingBottom: "1vw"}}>{`${forecast.name}`}</Typography>
+      <Typography 
+        align="center"
+        key={`weather-title-${forecast.name}`}
+        sx={{ fontSize: 20, fontWeight: 'bold', paddingTop: "1vw", paddingBottom: "1vw"}}>
+          {`${forecast.name}`}
+      </Typography>
+      
       {/* Weather image pulled from link */}
       <Tooltip title={forecast.detailedForecast} placement="bottom">
         <Box
@@ -20,22 +26,23 @@ function ForecastData({forecast}) {
           key={`weather-icon-${forecast.name}`}
         />
       </Tooltip>
+
       {/* Temperature */}
-      <Typography sx={{ fontSize: 26, fontWeight: 'medium', paddingTop: "1vw" }} align="center" key={`temp-title-${forecast.name}`}>{`${forecast.temperature}°${forecast.temperatureUnit}`}</Typography>
-      {/* Windspeed and direction */}
-      <Grid
-        sx={{
-          paddingTop: "1vw",
-        }}
+      <Typography 
+        sx={{ fontSize: 26, fontWeight: 'medium', paddingTop: "1vw" }}
         align="center"
-      >
+        key={`temp-title-${forecast.name}`}>{
+        `${forecast.temperature}°${forecast.temperatureUnit}`}
+      </Typography>
+
+      {/* Windspeed and direction */}
+      <Grid sx={{paddingTop: "1vw",}} align="center">
         <Typography sx={{ fontSize: 20, fontWeight: 'medium'}} key={`wind-title-${forecast.name}`}>{`${forecast.windSpeed}`}</Typography>
         <ArrowUpwardIcon sx={{transform: `rotate(${windDirectionToDegrees(forecast.windDirection)}deg)`}}/>
       </Grid>
-      <Box
-        sx={{
-          height: "2vw",
-        }}
+
+      {/* Space Between Day Sections */}
+      <Box sx={{ height: "2vw",}}
       />
     </>
   )
