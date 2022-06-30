@@ -1,24 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import { Grid, Box } from '@mui/material';
+
+import WeatherData from './components/WeatherData';
+import LocationsList from './components/LocationsList';
 
 function App() {
+  const [selectedLocation, setSelectedLocation] = useState({});
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Box
+        sx={{
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: '#54BAB9',
+        }}
+    >
+        <Grid
+              container
+              direction="row"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <LocationsList setSelectedLocation={setSelectedLocation} selectedLocation={selectedLocation} />
+          <WeatherData location={selectedLocation} />
+        </Grid>
+    </Box>
   );
 }
 
