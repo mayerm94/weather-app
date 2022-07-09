@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Grid, Box } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-import {theme} from './assets/themes';
+import {darkModePalette, lightModePalette} from './assets/themes';
 import WeatherData from './components/WeatherData';
 import LocationsList from './components/LocationsList';
 
 function App() {
   const [selectedLocation, setSelectedLocation] = useState({});
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: 
+          prefersDarkMode ? darkModePalette : lightModePalette
+      }),
+    [prefersDarkMode],
+  );
 
   return (
     <ThemeProvider theme={theme}>

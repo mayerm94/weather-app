@@ -52,7 +52,7 @@ function WeatherData({location}) {
       <Stack direction="row" spacing={"1vw"} justifyContent="center" key={`forecast-stack`} >
          {weatherData.properties.sortedPeriods.slice(0,7).map((x) => <ForecastColumn key={`forecast-${x[0].number}`} dayForecast={x}/>)}
       </Stack>
-    :  <Typography sx={{paddingTop:'2vw', paddingLeft: '2vw' }}variant="h4" align="center">{'Add/Select A City Of Interest To Begin'}</Typography>
+    :  <Typography sx={{paddingTop:'2vw', paddingLeft: '2vw', color: 'text.dark' }}variant="h4" align="center">{'Add/Select A City Of Interest To Begin'}</Typography>
 
   )
 }

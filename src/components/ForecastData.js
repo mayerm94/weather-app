@@ -9,7 +9,7 @@ function ForecastData({forecast}) {
       <Typography 
         align="center"
         key={`weather-title-${forecast.name}`}
-        sx={{ fontSize: 20, fontWeight: 'bold', paddingTop: "1vw", paddingBottom: "1vw"}}>
+        sx={{ fontSize: 20, fontWeight: 'bold', paddingTop: "1vw", paddingBottom: "1vw", color:'text.dark'}}>
           {`${forecast.name}`}
       </Typography>
       
@@ -29,16 +29,16 @@ function ForecastData({forecast}) {
 
       {/* Temperature */}
       <Typography 
-        sx={{ fontSize: 26, fontWeight: 'medium', paddingTop: "1vw" }}
+        sx={{ fontSize: 26, fontWeight: 'medium', paddingTop: "1vw", color:'text.dark' }}
         align="center"
         key={`temp-title-${forecast.name}`}>{
         `${forecast.temperature}°${forecast.temperatureUnit}`}
       </Typography>
 
       {/* Windspeed and direction */}
-      <Grid sx={{paddingTop: "1vw",}} align="center">
+      <Grid sx={{paddingTop: "1vw", color:'text.dark'}} align="center">
         <Typography sx={{ fontSize: 20, fontWeight: 'medium'}} key={`wind-title-${forecast.name}`}>{`${forecast.windSpeed}`}</Typography>
-        <ArrowUpwardIcon sx={{transform: `rotate(${windDirectionToDegrees(forecast.windDirection)}deg)`}}/>
+        <ArrowUpwardIcon sx={{transform: `rotate(${windDirectionToDegrees(forecast.windDirection)}deg)`, color:'text.dark'}}/>
       </Grid>
 
       {/* Space Between Day Sections */}

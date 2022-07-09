@@ -51,7 +51,7 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
 
   return (
     <Box sx={{ height: "100vh", backgroundColor: 'background.secondary.dark',}}>
-      <Typography sx={{paddingTop:'2vw', paddingBottom: '2vw'}}variant="h4" align="center">{'Cities of Interest'}</Typography>
+      <Typography sx={{paddingTop:'2vw', paddingBottom: '2vw', color: 'text.dark' }}variant="h4" align="center" >{'Cities of Interest'}</Typography>
 
       {/* Search And Add Button */}
       <Grid container direction="row" justifyContent="center"  alignItems="center">
@@ -77,16 +77,16 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
             key={`${location.zipcode}-item`}
             secondaryAction={
               // TODO: Could optimize this by removing by index. Fine for now given that N is at max 5
-              <IconButton  aria-label="remove city" onClick={() => { setWatchedCitiesAndUpdateStorage(watchedCities.filter((x) => x.zipcode !== location.zipcode))}} >
+              <IconButton sx={{color:'text.dark'   }} aria-label="remove city" onClick={() => { setWatchedCitiesAndUpdateStorage(watchedCities.filter((x) => x.zipcode !== location.zipcode))}} >
                 <RemoveCircleOutlineIcon />
               </IconButton>
             }
           >
-              <ListItemButton sx={{ borderTop: 2   }} onClick={() => {setSelectedLocationClick(location);}}>
+              <ListItemButton sx={{ borderTop: 2, color:'text.dark'}} divider={true} onClick={() => {setSelectedLocationClick(location);}}>
                 <ListItemAvatar>
                     <LocationOnIcon sx={{ color: (location.zipcode === selectedLocation.zipcode )? 'background.primary' : 'background.secondary.light'}}  />
                 </ListItemAvatar>
-                <ListItemText primary={location.city} secondary={location.state}/>
+                <ListItemText primary={<Typography>{location.city}</Typography>} secondary={<Typography sx={{color:'text.light'}}>{location.state}</Typography>}/>
             </ListItemButton>
           </ListItem>,
           )}
