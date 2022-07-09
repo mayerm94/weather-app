@@ -50,7 +50,7 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
   }
 
   return (
-    <Box sx={{ height: "100vh", backgroundColor: '#E9DAC1',}}>
+    <Box sx={{ height: "100vh", backgroundColor: 'background.secondary.dark',}}>
       <Typography sx={{paddingTop:'2vw', paddingBottom: '2vw'}}variant="h4" align="center">{'Cities of Interest'}</Typography>
 
       {/* Search And Add Button */}
@@ -84,7 +84,7 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
           >
               <ListItemButton sx={{ borderTop: 2   }} onClick={() => {setSelectedLocationClick(location);}}>
                 <ListItemAvatar>
-                    <LocationOnIcon sx={{ color: (location.zipcode === selectedLocation.zipcode )? "#54BAB9" : "#F7ECDE"}}  />
+                    <LocationOnIcon sx={{ color: (location.zipcode === selectedLocation.zipcode )? 'background.primary' : 'background.secondary.light'}}  />
                 </ListItemAvatar>
                 <ListItemText primary={location.city} secondary={location.state}/>
             </ListItemButton>

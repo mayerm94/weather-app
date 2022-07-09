@@ -21,7 +21,7 @@ import ForecastData from './ForecastData';
 
 function ForecastColumn({dayForecast}) {
   return (
-    <Box key={`weather-column-${dayForecast[0].number}0`}sx={{backgroundColor: '#fff', width: "10vw", height: "50vw"}}>
+    <Box key={`weather-column-${dayForecast[0].number}0`}sx={{ width: "10vw", height: "50vw"}}>
       <ForecastData forecast={dayForecast[0]}/>
       {dayForecast[1]? <ForecastData forecast={dayForecast[1]}/>: null}
     </Box>

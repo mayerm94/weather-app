@@ -10,7 +10,7 @@ function CitySelector({disabled, setSelectedValue}) {
   return (
     <Autocomplete
       id="city-selector"
-      sx={{ marginLeft: "1vw", width: "20vw", backgroundColor: "#F7ECDE" }}
+      sx={{ marginLeft: "1vw", width: "20vw", backgroundColor: 'background.secondary.light' }}
       onChange={(_, value) => setSelectedValue(value)}
       options={cityData}
       autoHighlight
