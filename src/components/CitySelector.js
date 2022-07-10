@@ -5,12 +5,20 @@ import formatCityName from '../utils/formatCityName';
 import cityData from '../assets/locations.json';
 
 
+const autocompleteStyle = {
+  marginLeft: "1vw",
+  width: "20vw",
+  '@media (max-width:780px)': {  width: "80vw"},
+  backgroundColor: 'background.secondary.light'
+}
+
+
 function CitySelector({disabled, setSelectedValue}) {
 
   return (
     <Autocomplete
       id="city-selector"
-      sx={{ marginLeft: "1vw", width: "20vw", backgroundColor: 'background.secondary.light' }}
+      sx={autocompleteStyle}
       onChange={(_, value) => setSelectedValue(value)}
       options={cityData}
       autoHighlight

@@ -19,9 +19,15 @@ import ForecastData from './ForecastData';
 //     "detailedForecast": "A chance of showers and thunderstorms. Mostly cloudy, with a high near 72. West southwest wind around 16 mph, with gusts as high as 25 mph. Chance of precipitation is 50%. New rainfall amounts less than a tenth of an inch possible."
 // },
 
+const forecastBoxStyle = {
+  width: "10vw",
+  '@media (max-width:1280px)': {  width: "8vw"},
+  '@media (max-width:780px)': {  width: "13vw"}
+}
+
 function ForecastColumn({dayForecast}) {
   return (
-    <Box key={`weather-column-${dayForecast[0].number}0`}sx={{ width: "10vw", height: "50vw"}}>
+    <Box key={`weather-column-${dayForecast[0].number}0`}sx={forecastBoxStyle}>
       <ForecastData forecast={dayForecast[0]}/>
       {dayForecast[1]? <ForecastData forecast={dayForecast[1]}/>: null}
     </Box>

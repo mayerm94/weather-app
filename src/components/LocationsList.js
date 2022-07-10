@@ -11,6 +11,33 @@ import CitySelector from './CitySelector';
 import {APP_STORAGE_KEY} from '../assets/constants';
 
 
+const listTitleStyle = {
+  paddingTop:'2vw',
+  paddingBottom: '2vw',
+  color: 'text.dark',
+  fontSize: 35,
+  '@media (max-width:780px)': {fontSize: 20, paddingTop:'1vw', paddingBottom: '1vw'},
+}
+
+const listBoxSurroundStyle = {
+  height: "100vh",
+  '@media (max-width:780px)': {  height: "65vh"},
+  backgroundColor: 'background.secondary.dark',
+}
+
+const primaryListItemStyle = {
+  fontSize: 25,
+  '@media (max-width:780px)': {fontSize: 12}
+}
+
+const secondaryListItemStyle = {
+  color:'text.light',
+  fontSize: 20,
+  '@media (max-width:780px)': {fontSize: 10}
+}
+
+const listItemStyle = { '@media (max-width:780px)': {paddingTop: 0, paddingBottom: 0}}
+
 function LocationsList({setSelectedLocation, selectedLocation}) {
   const [cityToAdd, setCityToAdd] = useState({});
   const [watchedCities, setWatchedCities] = useState(JSON.parse(localStorage.getItem(APP_STORAGE_KEY)) || []);
@@ -50,8 +77,8 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
   }
 
   return (
-    <Box sx={{ height: "100vh", backgroundColor: 'background.secondary.dark',}}>
-      <Typography sx={{paddingTop:'2vw', paddingBottom: '2vw', color: 'text.dark' }}variant="h4" align="center" >{'Cities of Interest'}</Typography>
+    <Box sx={listBoxSurroundStyle}>
+      <Typography sx={listTitleStyle}variant="h4" align="center" >{'Cities of Interest'}</Typography>
 
       {/* Search And Add Button */}
       <Grid container direction="row" justifyContent="center"  alignItems="center">
@@ -74,10 +101,11 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
       <List >
         {watchedCities.map( (location) => 
           <ListItem
+            sx={listItemStyle}
             key={`${location.zipcode}-item`}
             secondaryAction={
               // TODO: Could optimize this by removing by index. Fine for now given that N is at max 5
-              <IconButton sx={{color:'text.dark'   }} aria-label="remove city" onClick={() => { setWatchedCitiesAndUpdateStorage(watchedCities.filter((x) => x.zipcode !== location.zipcode))}} >
+              <IconButton sx={{color:'text.dark'}} aria-label="remove city" onClick={() => { setWatchedCitiesAndUpdateStorage(watchedCities.filter((x) => x.zipcode !== location.zipcode))}} >
                 <RemoveCircleOutlineIcon />
               </IconButton>
             }
@@ -86,7 +114,10 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
                 <ListItemAvatar>
                     <LocationOnIcon sx={{ color: (location.zipcode === selectedLocation.zipcode )? 'background.primary' : 'background.secondary.light'}}  />
                 </ListItemAvatar>
-                <ListItemText primary={<Typography>{location.city}</Typography>} secondary={<Typography sx={{color:'text.light'}}>{location.state}</Typography>}/>
+                <ListItemText
+                  primary={<Typography sx={primaryListItemStyle}>{location.city}</Typography>}
+                  secondary={<Typography sx={secondaryListItemStyle}>{location.state}</Typography>}
+                />
             </ListItemButton>
           </ListItem>,
           )}
