@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import axios from 'axios';
 import {Tooltip, Typography, Box, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemAvatar } from '@mui/material'
 
@@ -9,6 +9,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CitySelector from './CitySelector';
 
 import {APP_STORAGE_KEY} from '../assets/constants';
+import { ErrorContext } from '../contexts/ErrorContext';
 
 
 const listTitleStyle = {
@@ -41,6 +42,7 @@ const listItemStyle = { '@media (max-width:780px)': {paddingTop: 0, paddingBotto
 function LocationsList({setSelectedLocation, selectedLocation}) {
   const [cityToAdd, setCityToAdd] = useState({});
   const [watchedCities, setWatchedCities] = useState(JSON.parse(localStorage.getItem(APP_STORAGE_KEY)) || []);
+  const {setError} = useContext(ErrorContext);
 
   const disableNewAdditions = watchedCities.length >= 5;
   const disableDuplicates = !cityToAdd?.zipcode || disableNewAdditions || watchedCities.some((x) => x.zipcode === cityToAdd.zipcode);
@@ -56,7 +58,7 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
       // {  headers: { 'User-Agent': USER_AGENT} }  <- TODO: Figure out why docs say user-agent is required but chrome strips out with error "Refused to set unsafe header"
     );
     if(gridQueryResult.status !== 200){
-      console.log(`ERROR: Received HTTP ${gridQueryResult.status} when querying for grid points`);
+      setError(`ERROR: Received HTTP ${gridQueryResult.status} when querying for grid points`);
     }
     location.gridX = gridQueryResult?.data?.properties?.gridX;
     location.gridY = gridQueryResult?.data?.properties?.gridY;

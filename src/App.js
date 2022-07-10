@@ -4,8 +4,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {darkModePalette, lightModePalette} from './assets/themes';
+import ErrorAlert from './components/ErrorAlert';
 import WeatherData from './components/WeatherData';
 import LocationsList from './components/LocationsList';
+import { ErrorProvider } from './contexts/ErrorContext';
 
 function App() {
   const [selectedLocation, setSelectedLocation] = useState({});
@@ -21,16 +23,19 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-          sx={{
-           backgroundColor: 'background.primary',
-          }}
-      >
-          <Grid container direction="row">
-            <LocationsList setSelectedLocation={setSelectedLocation} selectedLocation={selectedLocation} />
-            <WeatherData location={selectedLocation} />
-          </Grid>
-      </Box>
+      <ErrorProvider>
+        <ErrorAlert />
+        <Box
+            sx={{
+            backgroundColor: 'background.primary',
+            }}
+        >
+            <Grid container direction="row">
+              <LocationsList setSelectedLocation={setSelectedLocation} selectedLocation={selectedLocation} />
+              <WeatherData location={selectedLocation} />
+            </Grid>
+        </Box>
+      </ErrorProvider>
     </ThemeProvider>
   );
 }
