@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import axios from 'axios';
 import {Tooltip, Typography, Box, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, ListItemAvatar } from '@mui/material'
 
@@ -9,11 +9,40 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CitySelector from './CitySelector';
 
 import {APP_STORAGE_KEY} from '../assets/constants';
+import { ErrorContext } from '../contexts/ErrorContext';
 
+
+const listTitleStyle = {
+  paddingTop:'2vw',
+  paddingBottom: '2vw',
+  color: 'text.dark',
+  fontSize: 35,
+  '@media (max-width:780px)': {fontSize: 20, paddingTop:'1vw', paddingBottom: '1vw'},
+}
+
+const listBoxSurroundStyle = {
+  height: "100vh",
+  '@media (max-width:780px)': {  height: "65vh"},
+  backgroundColor: 'background.secondary.dark',
+}
+
+const primaryListItemStyle = {
+  fontSize: 25,
+  '@media (max-width:780px)': {fontSize: 12}
+}
+
+const secondaryListItemStyle = {
+  color:'text.light',
+  fontSize: 20,
+  '@media (max-width:780px)': {fontSize: 10}
+}
+
+const listItemStyle = { '@media (max-width:780px)': {paddingTop: 0, paddingBottom: 0}}
 
 function LocationsList({setSelectedLocation, selectedLocation}) {
   const [cityToAdd, setCityToAdd] = useState({});
   const [watchedCities, setWatchedCities] = useState(JSON.parse(localStorage.getItem(APP_STORAGE_KEY)) || []);
+  const {setError} = useContext(ErrorContext);
 
   const disableNewAdditions = watchedCities.length >= 5;
   const disableDuplicates = !cityToAdd?.zipcode || disableNewAdditions || watchedCities.some((x) => x.zipcode === cityToAdd.zipcode);
@@ -29,7 +58,7 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
       // {  headers: { 'User-Agent': USER_AGENT} }  <- TODO: Figure out why docs say user-agent is required but chrome strips out with error "Refused to set unsafe header"
     );
     if(gridQueryResult.status !== 200){
-      console.log(`ERROR: Received HTTP ${gridQueryResult.status} when querying for grid points`);
+      setError(`ERROR: Received HTTP ${gridQueryResult.status} when querying for grid points`);
     }
     location.gridX = gridQueryResult?.data?.properties?.gridX;
     location.gridY = gridQueryResult?.data?.properties?.gridY;
@@ -50,8 +79,8 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
   }
 
   return (
-    <Box sx={{ height: "100vh", backgroundColor: '#E9DAC1',}}>
-      <Typography sx={{paddingTop:'2vw', paddingBottom: '2vw'}}variant="h4" align="center">{'Cities of Interest'}</Typography>
+    <Box sx={listBoxSurroundStyle}>
+      <Typography sx={listTitleStyle}variant="h4" align="center" >{'Cities of Interest'}</Typography>
 
       {/* Search And Add Button */}
       <Grid container direction="row" justifyContent="center"  alignItems="center">
@@ -74,19 +103,23 @@ function LocationsList({setSelectedLocation, selectedLocation}) {
       <List >
         {watchedCities.map( (location) => 
           <ListItem
+            sx={listItemStyle}
             key={`${location.zipcode}-item`}
             secondaryAction={
               // TODO: Could optimize this by removing by index. Fine for now given that N is at max 5
-              <IconButton  aria-label="remove city" onClick={() => { setWatchedCitiesAndUpdateStorage(watchedCities.filter((x) => x.zipcode !== location.zipcode))}} >
+              <IconButton sx={{color:'text.dark'}} aria-label="remove city" onClick={() => { setWatchedCitiesAndUpdateStorage(watchedCities.filter((x) => x.zipcode !== location.zipcode))}} >
                 <RemoveCircleOutlineIcon />
               </IconButton>
             }
           >
-              <ListItemButton sx={{ borderTop: 2   }} onClick={() => {setSelectedLocationClick(location);}}>
+              <ListItemButton sx={{ borderTop: 2, color:'text.dark'}} divider={true} onClick={() => {setSelectedLocationClick(location);}}>
                 <ListItemAvatar>
-                    <LocationOnIcon sx={{ color: (location.zipcode === selectedLocation.zipcode )? "#54BAB9" : "#F7ECDE"}}  />
+                    <LocationOnIcon sx={{ color: (location.zipcode === selectedLocation.zipcode )? 'background.primary' : 'background.secondary.light'}}  />
                 </ListItemAvatar>
-                <ListItemText primary={location.city} secondary={location.state}/>
+                <ListItemText
+                  primary={<Typography sx={primaryListItemStyle}>{location.city}</Typography>}
+                  secondary={<Typography sx={secondaryListItemStyle}>{location.state}</Typography>}
+                />
             </ListItemButton>
           </ListItem>,
           )}
